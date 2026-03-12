@@ -1,0 +1,34 @@
+# === Unity generated folders (ignore temp/cache/build files) ===
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+MemoryCaptures/
+
+# === Visual Studio / Rider / IDE files ===
+.vs/
+*.csproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# === Crash reports / system files ===
+sysinfo.txt
+
+# === Unity cache server ===
+Cache/
+
+# === Ignore everything in Packages except manifest files ===
+Packages/*/
+!Packages/manifest.json
+!Packages/packages-lock.json
