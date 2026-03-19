@@ -1,6 +1,10 @@
+using System;
+using System.Diagnostics;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.GraphicsBuffer;
+using Debug = UnityEngine.Debug;
+using Random = UnityEngine.Random;
 
 public class EnemyControllerBasic : MonoBehaviour
 {
@@ -16,12 +20,12 @@ public class EnemyControllerBasic : MonoBehaviour
     enum STATE { IDLE, WANDER, ATTACK, CHASE, DEAD }
     STATE state = STATE.IDLE;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         anim = this.GetComponent<Animator>();
         agent = this.GetComponent<NavMeshAgent>();
     }
+
     void TurnoffTriggers()
     {
         anim.SetBool("Run", false);
@@ -30,176 +34,150 @@ public class EnemyControllerBasic : MonoBehaviour
         anim.SetBool("Attack", false);
         anim.SetBool("Die", false);
     }
+
     float DistancetoPlayer()
     {
         return Vector3.Distance(target.transform.position, this.transform.position);
     }
+
     bool CanSeePlayer()
     {
-        if (DistancetoPlayer() < 10)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return DistancetoPlayer() < 10;
     }
+
     bool ForgetPlayer()
     {
-        if (DistancetoPlayer() > 20)
+        return DistancetoPlayer() > 20;
+    }
+
+    bool SetDestinationSafe(Vector3 destination)
+    {
+        if (agent != null && agent.isActiveAndEnabled && agent.isOnNavMesh)
         {
+            agent.SetDestination(destination);
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
+
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.tag);
-
-        if (other.gameObject.tag == "Sword")
+        if (other.gameObject.CompareTag("Sword"))
         {
-            
-
-        }
             hit = 1;
-
             impact.Play();
             Debug.Log("Chaser hit");
-
-        
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-    if (this.transform.position.y < -100)
-    {
-   
-        Destroy(this.gameObject);
-    }
-    if (target == null)
-    {
-        target = GameObject.FindWithTag("Player");
-        return;
-    }
-    switch (state)
-    {
+        if (this.transform.position.y < -100)
+        {
+            Destroy(this.gameObject);
+        }
 
+        if (target == null)
+        {
+            target = GameObject.FindWithTag("Player");
+            return;
+        }
 
-        case STATE.IDLE:
-            if (Chaseonly)
-            {
-                state = STATE.CHASE;
+        switch (state)
+        {
+            case STATE.IDLE:
+                if (Chaseonly)
+                {
+                    state = STATE.CHASE;
+                    break;
+                }
+                if (hit > 0)
+                {
+                    state = STATE.DEAD;
+                }
+                if (CanSeePlayer())
+                {
+                    state = STATE.CHASE;
+                }
+                else if (Random.Range(0, 5000) < 5)
+                {
+                    state = STATE.WANDER;
+                }
                 break;
-            }
-            if (hit > 0)
-            {
-                state = STATE.DEAD;
-            }
-            if (CanSeePlayer())
-            {
-                state = STATE.CHASE;
-            }
-            else if (Random.Range(0, 5000) < 5)
-            {
-                state = STATE.WANDER;
-            }
-            break;
 
-        case STATE.WANDER:
-            if (!agent.hasPath)
-            {
-                agent.speed = walkingspeed;
-                anim.SetBool("Walk", true);
-                float newX = this.transform.position.x + Random.Range(-15, 15);
-                float newZ = this.transform.position.z + Random.Range(-15, 15);
-                // float newY = Terrain.activeTerrain.SampleHeight(new Vector3(newX, 0, newZ));
-                float newY = 0f;
-                Vector3 dest = new Vector3(newX, newY, newZ);
-                agent.SetDestination(dest);
-                agent.stoppingDistance = 2f;
+            case STATE.WANDER:
+                if (!agent.hasPath)
+                {
+                    agent.speed = walkingspeed;
+                    anim.SetBool("Walk", true);
+                    float newX = this.transform.position.x + Random.Range(-15, 15);
+                    float newZ = this.transform.position.z + Random.Range(-15, 15);
+                    float newY = 0f;
+                    Vector3 dest = new Vector3(newX, newY, newZ);
+                    if (!SetDestinationSafe(dest))
+                        break;
+                    agent.stoppingDistance = 2f;
+                }
+                if (hit > 0)
+                {
+                    state = STATE.DEAD;
+                }
+                if (CanSeePlayer())
+                {
+                    Debug.Log("Can see player");
+                    state = STATE.CHASE;
+                }
+                else if (Random.Range(0, 5000) < 5)
+                {
+                    state = STATE.IDLE;
+                    TurnoffTriggers();
+                    agent.ResetPath();
+                }
+                break;
 
-
-            }
-            if (hit > 0)
-            {
-                state = STATE.DEAD;
-            }
-            if (CanSeePlayer())
-            {
-                Debug.Log("Can see player");
-
-                state = STATE.CHASE;
-            }
-            else if (Random.Range(0, 5000) < 5)
-            {
-                state = STATE.IDLE;
+            case STATE.CHASE:
+                if (!SetDestinationSafe(target.transform.position))
+                    break;
+                agent.stoppingDistance = 2;
                 TurnoffTriggers();
-                agent.ResetPath();
-            }
-            break;
+                agent.speed = runningspeed;
+                anim.SetBool("Run", true);
+                if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
+                {
+                    state = STATE.ATTACK;
+                }
+                if (hit > 0)
+                {
+                    state = STATE.DEAD;
+                }
+                if (ForgetPlayer() && !Chaseonly)
+                {
+                    state = STATE.WANDER;
+                    agent.ResetPath();
+                }
+                break;
 
-        case STATE.CHASE:
+            case STATE.ATTACK:
+                if (hit > 0)
+                {
+                    state = STATE.DEAD;
+                }
+                TurnoffTriggers();
+                anim.SetBool("Attack", true);
+                this.transform.LookAt(new Vector3(target.transform.position.x,transform.position.y,target.transform.position.z));
+                //Debug.Log("Attack");
+                if (DistancetoPlayer() > agent.stoppingDistance + 2)
+                {
+                    state = STATE.CHASE;
+                }
+                break;
 
-            agent.SetDestination(target.transform.position);
-            agent.stoppingDistance = 2;
-            TurnoffTriggers();
-            agent.speed = runningspeed;
-            anim.SetBool("Run", true);
-            if (agent.remainingDistance <= agent.stoppingDistance && !agent.pathPending)
-            {
-                state = STATE.ATTACK;
-            }
-            if (hit > 0)
-            {
-                state = STATE.DEAD;
-            }
-            if (ForgetPlayer() && !Chaseonly)
-            {
-                state = STATE.WANDER;
-                agent.ResetPath();
-            }
-            break;
-
-        case STATE.ATTACK:
-
-            if (hit > 0)
-            {
-                state = STATE.DEAD;
-            }
-            TurnoffTriggers();
-            anim.SetBool("Attack", true);
-            this.transform.LookAt(target.transform.position);
-            Debug.Log("Attack");
-            if (DistancetoPlayer() > agent.stoppingDistance + 2)
-            {
-                state = STATE.CHASE;
-
-            }
-
-            break;
-
-        case STATE.DEAD:
-
-            TurnoffTriggers();
-            anim.SetBool("Die", true);
-
-
-
-            // hit = 1;
-            // Destroy(this.gameObject, 5f);
-            Debug.Log("Case DEAD");
-
-            Destroy(this.gameObject, 5f);
-            // this.GetComponent<Sink>().StartSink();
-            break;
-
-
+            case STATE.DEAD:
+                TurnoffTriggers();
+                anim.SetBool("Die", true);
+                Debug.Log("Case DEAD");
+                Destroy(this.gameObject, 5f);
+                break;
+        }
     }
-
-}
 }
