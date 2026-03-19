@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 366870766979454480, guid: fcc7e72ef9922724c9dbe91fe1141293, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: e857d9b29ce54924d8a62e39c7d81e67, type: 2}
+      objectReference: {fileID: 2100000, guid: 629484e83030d6e4ab78dbdc0ce83456, type: 2}
     - target: {fileID: 2803820806472684270, guid: fcc7e72ef9922724c9dbe91fe1141293, type: 3}
       propertyPath: m_Name
       value: SkeleChaser Variant
