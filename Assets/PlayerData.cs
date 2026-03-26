@@ -5,6 +5,6 @@ using UnityEngine;
 [CreateAssetMenu]
 public class PlayerData : ScriptableObject
 {
-    public int Kills;
+    public int kills;
     public float health;
 }

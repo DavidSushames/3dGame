@@ -10,7 +10,9 @@ public class EnemyControllerBasic : MonoBehaviour
 {
     Animator anim;
     public GameObject target;
+    public GameObject impactEffect;
     public AudioSource impact;
+    public PlayerData playerData;
     NavMeshAgent agent;
     int hit = 0;
     public float walkingspeed;
@@ -24,6 +26,7 @@ public class EnemyControllerBasic : MonoBehaviour
     {
         anim = this.GetComponent<Animator>();
         agent = this.GetComponent<NavMeshAgent>();
+        impact = GetComponent<AudioSource>();
     }
 
     void TurnoffTriggers()
@@ -62,8 +65,16 @@ public class EnemyControllerBasic : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Vector3 impactPoint = other.ClosestPointOnBounds(transform.position);
+
         if (other.gameObject.CompareTag("Sword"))
         {
+            if (hit == 0)
+            {
+                GameObject effect = Instantiate(impactEffect, impactPoint, Quaternion.identity);
+                playerData.kills ++;
+            }
+
             hit = 1;
             impact.Play();
             Debug.Log("Chaser hit");

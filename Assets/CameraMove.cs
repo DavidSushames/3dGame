@@ -26,6 +26,7 @@ public class CameraController2 : MonoBehaviour
     float yRotation = 0f;
 
     float targetDistance;
+    public LayerMask collisionMask;
 
     void OnEnable()
     {
@@ -75,11 +76,12 @@ public class CameraController2 : MonoBehaviour
         Vector3 origin = player.position + Vector3.up * heightOffset;
 
         RaycastHit hit;
+        float cameraRadius = 0.3f; // tweak this (0.2–0.5 is good)
 
-        // Wall collision
-        if (Physics.Raycast(origin, direction.normalized, out hit, distanceFromPlayer))
+        // SphereCast for proper collision
+        if (Physics.SphereCast(origin, cameraRadius, direction.normalized, out hit, distanceFromPlayer, collisionMask))
         {
-            transform.position = origin + direction.normalized * hit.distance;
+            transform.position = origin + direction.normalized * (hit.distance - 0.1f);
         }
         else
         {

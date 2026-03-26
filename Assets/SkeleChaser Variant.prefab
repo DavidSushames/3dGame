@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5945225168300908656, guid: fcc7e72ef9922724c9dbe91fe1141293, type: 3}
+      propertyPath: impactEffect
+      value: 
+      objectReference: {fileID: 2921732478489023156, guid: 64d407f5c21b3474e99af6bab81ca8a6, type: 3}
     - target: {fileID: 8881890470304338478, guid: fcc7e72ef9922724c9dbe91fe1141293, type: 3}
       propertyPath: m_Controller
       value: 
@@ -167,6 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyControllerBasic
   target: {fileID: 0}
+  impactEffect: {fileID: 0}
   impact: {fileID: 0}
   walkingspeed: 2
   runningspeed: 4
