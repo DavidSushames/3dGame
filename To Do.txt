@@ -1,0 +1,3 @@
+More trees/clutter., Proper environment
+enemies drop potions sometimes.
+Find better assets.
