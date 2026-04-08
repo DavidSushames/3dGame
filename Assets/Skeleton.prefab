@@ -11,22 +11,22 @@ PrefabInstance:
     - target: {fileID: 366870766979454480, guid: fcc7e72ef9922724c9dbe91fe1141293, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 629484e83030d6e4ab78dbdc0ce83456, type: 2}
+      objectReference: {fileID: 2100000, guid: c3e49e900242e7e419303720cdb3b0cb, type: 2}
     - target: {fileID: 2803820806472684270, guid: fcc7e72ef9922724c9dbe91fe1141293, type: 3}
       propertyPath: m_Name
       value: Skeleton
       objectReference: {fileID: 0}
     - target: {fileID: 3288468337185982548, guid: fcc7e72ef9922724c9dbe91fe1141293, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.65
+      value: -5.0753617
       objectReference: {fileID: 0}
     - target: {fileID: 3288468337185982548, guid: fcc7e72ef9922724c9dbe91fe1141293, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.0000019073486
       objectReference: {fileID: 0}
     - target: {fileID: 3288468337185982548, guid: fcc7e72ef9922724c9dbe91fe1141293, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.69853
+      value: 3.435875
       objectReference: {fileID: 0}
     - target: {fileID: 3288468337185982548, guid: fcc7e72ef9922724c9dbe91fe1141293, type: 3}
       propertyPath: m_LocalRotation.w
@@ -59,7 +59,11 @@ PrefabInstance:
     - target: {fileID: 4461325995939998605, guid: fcc7e72ef9922724c9dbe91fe1141293, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 629484e83030d6e4ab78dbdc0ce83456, type: 2}
+      objectReference: {fileID: 2100000, guid: c3e49e900242e7e419303720cdb3b0cb, type: 2}
+    - target: {fileID: 4461325996420789935, guid: fcc7e72ef9922724c9dbe91fe1141293, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c3e49e900242e7e419303720cdb3b0cb, type: 2}
     - target: {fileID: 5945225168300908656, guid: fcc7e72ef9922724c9dbe91fe1141293, type: 3}
       propertyPath: Chaseonly
       value: 1
