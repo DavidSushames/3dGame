@@ -33,8 +33,7 @@ public class Spawner : MonoBehaviour
             NavMeshHit hit;
             if (NavMesh.SamplePosition(randoPoint, out hit, 10.0f, NavMesh.AllAreas))
             {
-                Instantiate(Skeletonprefab, randoPoint, Quaternion.identity);
-                //playerdata.Chasers = playerdata.Chasers + 1;
+                Instantiate(Skeletonprefab, hit.position, Quaternion.identity);
             }          
             
         }
@@ -43,23 +42,6 @@ public class Spawner : MonoBehaviour
         // Update is called once per frame
         void Update()
     {
-        /*if (ChaserSpawn)
-        {
-            if(playerdata.Chasers <= 0)
-            {
-                for (int i = 0; i < number; i++)
-                {
-                    Vector3 randoPoint = this.transform.position + Random.insideUnitSphere * SpawnRadius;
-                    NavMeshHit hit;
-                    if (NavMesh.SamplePosition(randoPoint, out hit, 10.0f, NavMesh.AllAreas))
-                    {
-                        Instantiate(Skeletonprefab, randoPoint, Quaternion.identity);
-                       // playerdata.Chasers = playerdata.Chasers + 1;
-                    }
-
-                }
-            }
-        }*/
-        
+               
     }
 }

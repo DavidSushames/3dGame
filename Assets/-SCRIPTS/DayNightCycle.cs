@@ -35,10 +35,10 @@ public class DayNightCycle : MonoBehaviour
             {
                 new(new Color(0.4f, 0.6f, 0.9f), 0.0f),
                 new(new Color(0.4f, 0.6f, 0.9f), 0.5f),
-                new(new Color(0.4f, 0.4f, 0.2f), 0.7f),
-                new(new Color(0.45f, 0.35f, 0.15f), 0.75f),
-                new(new Color(0.3f, 0.25f, 0.1f), 0.8f),
-                new(new Color(0.00f, 0.00f, 0.00f), 1.0f),
+                new(new Color(0.45f, 0.4f, 0.2f), 0.65f),
+                new(new Color(0.5f, 0.35f, 0.15f), 0.75f),
+                new(new Color(0.45f, 0.3f, 0.1f), 0.8f),
+                new(new Color(0.00f, 0.00f, 0.01f), 1.0f),
             },
             new GradientAlphaKey[] { new(1f, 0f), new(1f, 1f) }
         );

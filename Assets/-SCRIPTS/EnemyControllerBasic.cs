@@ -45,12 +45,12 @@ public class EnemyControllerBasic : MonoBehaviour
 
     bool CanSeePlayer()
     {
-        return DistancetoPlayer() < 10;
+        return DistancetoPlayer() < 20;
     }
 
     bool ForgetPlayer()
     {
-        return DistancetoPlayer() > 20;
+        return DistancetoPlayer() > 40;
     }
 
     bool SetDestinationSafe(Vector3 destination)
