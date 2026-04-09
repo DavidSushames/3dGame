@@ -338,8 +338,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1539
-    y: 79
+    x: 1540
+    y: 24
     width: 380
     height: 915
   m_SerializedDataModeController:
@@ -388,7 +388,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 79
+    y: 24
     width: 220
     height: 647
   m_SerializedDataModeController:
@@ -405,8 +405,8 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 96a2ffff
-      m_LastClickedID: -23914
+      m_SelectedIDs: 
+      m_LastClickedID: 0
       m_ExpandedIDs: 3c77fcff14fbffff5cb30000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -453,8 +453,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 221
-    y: 79
+    x: 222
+    y: 24
     width: 1316
     height: 647
   m_SerializedDataModeController:
@@ -897,7 +897,7 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: 0.11496501, y: -0.00986879, z: 0.0010153869, w: 0.99337274}
     speed: 2
-    m_Value: {x: 0.114958994, y: -0.0098682735, z: 0.0010153338, w: 0.99332076}
+    m_Value: {x: -0.11496501, y: 0.00986879, z: -0.0010153869, w: -0.9933728}
   m_Size:
     m_Target: 240.7532
     speed: 2
@@ -1164,7 +1164,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 752
+    y: 697
     width: 1538
     height: 242
   m_SerializedDataModeController:
@@ -1208,7 +1208,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: c0bc0000
     m_LastClickedID: 48320
-    m_ExpandedIDs: 00000000c0bc000050be00005abe00005cbe000062be0000a0be0000f8cc000000ca9a3bffffff7f
+    m_ExpandedIDs: 0000000066bd000068bd0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1237,7 +1237,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000c0bc000068050100
+    m_ExpandedIDs: 0000000066bd000068bd0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
