@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PotionController : MonoBehaviour
 {
+    public PlayerData playerData;
+    public AudioClip potionSound;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -12,8 +14,12 @@ public class PotionController : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("HIT POTION");
-            Destroy(gameObject);
+            if (playerData.health < 100)
+            {
+                Debug.Log("HIT POTION");
+                AudioSource.PlayClipAtPoint(potionSound, transform.position);
+                Destroy(gameObject);
+            }
         }
     }
     //

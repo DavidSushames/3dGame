@@ -73,11 +73,10 @@ public class EnemyControllerBasic : MonoBehaviour
             {
                 GameObject effect = Instantiate(impactEffect, impactPoint, Quaternion.identity);
                 playerData.kills ++;
+                hit++;
+                impact.Play();
+                Debug.Log("Chaser hit");
             }
-
-            hit = 1;
-            impact.Play();
-            Debug.Log("Chaser hit");
         }
     }
 

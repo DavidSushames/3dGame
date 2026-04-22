@@ -1,29 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
+using Unity.VisualScripting;
 
 public class QuitGame : MonoBehaviour
 {
 
-    public Button QuitButton;
     public string GameScene;
+    public InputActionReference menu;
 
     // Start is called before the first frame update
     void Start()
     {
-        Button Quitbtn = QuitButton.GetComponent<Button>();
-        Quitbtn.onClick.AddListener(TaskOnClickQuit);
+
     }
     void TaskOnClickQuit()
     {
         Debug.Log("You have clicked Quit Button!");
-        SceneManager.LoadScene(GameScene);
+        
     }
     // Update is called once per frame
     void Update()
     {
-        
+        if (menu.action.WasPressedThisFrame())
+        {
+            SceneManager.LoadScene(GameScene);
+        }
     }
 }

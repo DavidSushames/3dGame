@@ -19,6 +19,7 @@ public class FighterController : MonoBehaviour
     public float skeletonDamage;
     public float potionValue;
     public GameObject sword;
+    
 
     private Vector3 currentMovement;
     private Vector2 rotStore;
@@ -49,7 +50,7 @@ public class FighterController : MonoBehaviour
             Debug.Log("SKELETON HIT");
             playerData.health -= skeletonDamage;
         }
-        if (other.gameObject.tag == "Potion")
+        if (other.gameObject.tag == "Potion" && playerData.health < 100)
         {
             if ((playerData.health + potionValue) <= 100)
             {
@@ -62,6 +63,7 @@ public class FighterController : MonoBehaviour
             }
         }
     }
+    //nice
 
     void Update()
     {

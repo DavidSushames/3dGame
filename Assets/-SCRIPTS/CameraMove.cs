@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CameraController2 : MonoBehaviour
+public class CameraMove : MonoBehaviour
 {
     public Transform player;
 
@@ -48,6 +48,8 @@ public class CameraController2 : MonoBehaviour
 
     void LateUpdate()
     {
+        if (Cursor.lockState != CursorLockMode.Locked) return;
+
         // Mouse input
         Vector2 mouseInput = mouseLook.ReadValue<Vector2>();
 

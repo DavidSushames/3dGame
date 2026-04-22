@@ -13,11 +13,12 @@ public class BeginGame : MonoBehaviour
    // public Toggle Soundtoggle;
     public TextMeshProUGUI loading;
     public string GameScene;
-    public AudioSource bmusic;
+    //public AudioSource bmusic;
 
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
         Button Begbtn = BeginButton.GetComponent<Button>();
         Begbtn.onClick.AddListener(TaskOnClickBeg);
         loading.gameObject.SetActive(false);
@@ -33,16 +34,6 @@ public class BeginGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       /* if (Soundtoggle.isOn)
-        {
-            bmusic.mute = true;
-        }
-        else
-        {
-            bmusic.mute = false;
-        }
-       */
-
-
+ 
     }
 }
