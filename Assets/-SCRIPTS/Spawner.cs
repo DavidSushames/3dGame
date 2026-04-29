@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,38 +11,45 @@ public class Spawner : MonoBehaviour
     public float SpawnRadius;
     public bool SpawnOnStart = true;
     public bool ChaserSpawn = true;
-    //public PlayerData playerdata;
-    
 
-    // Start is called before the first frame update
+    [Header("Repeat Spawning")]
+    public bool SpawnOnInterval = false;
+    public float spawnInterval = 5f; // seconds between each spawn wave
+
     void Start()
     {
         if (SpawnOnStart)
-        {
             SpawnAll();
-            
-        }
-        
+
+        if (SpawnOnInterval)
+            StartCoroutine(SpawnLoop());
+
         this.GetComponent<Collider>().enabled = false;
+    }
+
+    IEnumerator SpawnLoop()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(spawnInterval);
+            SpawnAll();
+        }
     }
 
     void SpawnAll()
     {
         for (int i = 0; i < number; i++)
         {
-            Vector3 randoPoint = this.transform.position + Random.insideUnitSphere * SpawnRadius;
+            Vector3 randoPoint = this.transform.position + UnityEngine.Random.insideUnitSphere * SpawnRadius;
             NavMeshHit hit;
             if (NavMesh.SamplePosition(randoPoint, out hit, 10.0f, NavMesh.AllAreas))
             {
                 Instantiate(Skeletonprefab, hit.position, Quaternion.identity);
-            }          
-            
+            }
         }
     }
 
-        // Update is called once per frame
-        void Update()
+    void Update()
     {
-               
     }
 }

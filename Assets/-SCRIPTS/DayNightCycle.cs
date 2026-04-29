@@ -71,6 +71,7 @@ public class DayNightCycle : MonoBehaviour
         RenderSettings.ambientSkyColor = skyColor.Evaluate(t);
         RenderSettings.ambientEquatorColor = skyColor.Evaluate(t) * 0.6f;
         RenderSettings.ambientGroundColor = groundColor.Evaluate(t);
-        RenderSettings.skybox.SetFloat("_Exposure", Mathf.Lerp(1.2f, 0f, t));
+        if (RenderSettings.skybox.HasProperty("_Exposure"))
+            RenderSettings.skybox.SetFloat("_Exposure", Mathf.Lerp(1.2f, 0.1f, t));
     }
 }

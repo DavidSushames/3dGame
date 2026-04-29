@@ -18,6 +18,7 @@ public class EnemyControllerBasic : MonoBehaviour
     public float walkingspeed;
     public float runningspeed;
     public bool Chaseonly;
+    bool isDead = false;
 
     enum STATE { IDLE, WANDER, ATTACK, CHASE, DEAD }
     STATE state = STATE.IDLE;
@@ -45,12 +46,12 @@ public class EnemyControllerBasic : MonoBehaviour
 
     bool CanSeePlayer()
     {
-        return DistancetoPlayer() < 20;
+        return DistancetoPlayer() < 40;
     }
 
     bool ForgetPlayer()
     {
-        return DistancetoPlayer() > 40;
+        return DistancetoPlayer() > 80;
     }
 
     bool SetDestinationSafe(Vector3 destination)
@@ -72,7 +73,7 @@ public class EnemyControllerBasic : MonoBehaviour
             if (hit == 0)
             {
                 GameObject effect = Instantiate(impactEffect, impactPoint, Quaternion.identity);
-                playerData.kills ++;
+                playerData.kills++;
                 hit++;
                 impact.Play();
                 Debug.Log("Chaser hit");
@@ -174,7 +175,7 @@ public class EnemyControllerBasic : MonoBehaviour
                 }
                 TurnoffTriggers();
                 anim.SetBool("Attack", true);
-                this.transform.LookAt(new Vector3(target.transform.position.x,transform.position.y,target.transform.position.z));
+                this.transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
                 //Debug.Log("Attack");
                 if (DistancetoPlayer() > agent.stoppingDistance + 2)
                 {
@@ -183,10 +184,21 @@ public class EnemyControllerBasic : MonoBehaviour
                 break;
 
             case STATE.DEAD:
-                TurnoffTriggers();
-                anim.SetBool("Die", true);
-                Debug.Log("Case DEAD");
-                Destroy(this.gameObject, 5f);
+                if (!isDead)
+                {
+                    isDead = true;
+                    TurnoffTriggers();
+                    anim.SetBool("Die", true);
+                    Debug.Log("Case DEAD");
+
+                    // Disable ALL colliders on this object and children
+                    foreach (Collider c in GetComponentsInChildren<Collider>(true))
+                    {
+                        c.enabled = false;
+                    }
+
+                    Destroy(this.gameObject, 5f);
+                }
                 break;
         }
     }

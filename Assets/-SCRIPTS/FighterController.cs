@@ -19,12 +19,15 @@ public class FighterController : MonoBehaviour
     public float skeletonDamage;
     public float potionValue;
     public GameObject sword;
-    
 
     private Vector3 currentMovement;
     private Vector2 rotStore;
+    private Collider swordCollider;
+    private bool isAttacking = false;
+    private float attackTimer = 0f;
 
     Animator anim1;
+
     void Start()
     {
         charCon = GetComponent<CharacterController>();
@@ -35,26 +38,28 @@ public class FighterController : MonoBehaviour
         anim1.SetBool("Right", false);
         anim1.SetBool("Left", false);
         anim1.SetBool("Attack", false);
-        sword.SetActive(false);
+        sword.SetActive(true);
+        swordCollider = sword.GetComponent<Collider>();
+        swordCollider.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Enemy")
         {
-            Debug.Log("I'm hit");
+            UnityEngine.Debug.Log("I'm hit");
             playerData.health -= enemyDamage;
         }
         if (other.gameObject.tag == "Skeleton")
         {
-            Debug.Log("SKELETON HIT");
+            UnityEngine.Debug.Log("SKELETON HIT");
             playerData.health -= skeletonDamage;
         }
         if (other.gameObject.tag == "Potion" && playerData.health < 100)
         {
             if ((playerData.health + potionValue) <= 100)
             {
-                Debug.Log("POTION");
+                UnityEngine.Debug.Log("POTION");
                 playerData.health += potionValue;
             }
             else if ((playerData.health + potionValue) > 100)
@@ -62,8 +67,11 @@ public class FighterController : MonoBehaviour
                 playerData.health = 100;
             }
         }
+        if (other.gameObject.tag == "Coin")
+        {
+            playerData.coins ++;
+        }
     }
-    //nice
 
     void Update()
     {
@@ -89,7 +97,6 @@ public class FighterController : MonoBehaviour
             anim1.SetBool("Left", false);
             anim1.SetBool("Jump", false);
             anim1.SetBool("Attack", false);
-            sword.SetActive(false);
         }
         else if (moveInput.y < 0f)
         {
@@ -99,7 +106,6 @@ public class FighterController : MonoBehaviour
             anim1.SetBool("Left", false);
             anim1.SetBool("Jump", false);
             anim1.SetBool("Attack", false);
-            sword.SetActive(false);
         }
         else if (moveInput.x > 0f)
         {
@@ -109,7 +115,6 @@ public class FighterController : MonoBehaviour
             anim1.SetBool("Left", false);
             anim1.SetBool("Jump", false);
             anim1.SetBool("Attack", false);
-            sword.SetActive(false);
         }
         else if (moveInput.x < 0f)
         {
@@ -119,7 +124,6 @@ public class FighterController : MonoBehaviour
             anim1.SetBool("Left", true);
             anim1.SetBool("Jump", false);
             anim1.SetBool("Attack", false);
-            sword.SetActive(false);
         }
 
         Vector3 moveForward = transform.forward * moveInput.y;
@@ -150,8 +154,8 @@ public class FighterController : MonoBehaviour
             anim1.SetBool("Left", false);
             anim1.SetBool("Jump", true);
             anim1.SetBool("Attack", false);
-            sword.SetActive(false);
         }
+
         if (attackAction.action.WasPressedThisFrame())
         {
             anim1.SetBool("Run", false);
@@ -160,7 +164,19 @@ public class FighterController : MonoBehaviour
             anim1.SetBool("Left", false);
             anim1.SetBool("Jump", false);
             anim1.SetBool("Attack", true);
-            sword.SetActive(true);
+            swordCollider.enabled = true;
+            isAttacking = true;
+            attackTimer = 1f;
+        }
+
+        if (isAttacking)
+        {
+            attackTimer -= Time.deltaTime;
+            if (attackTimer <= 0f)
+            {
+                swordCollider.enabled = false;
+                isAttacking = false;
+            }
         }
 
         charCon.Move(currentMovement * Time.deltaTime);
